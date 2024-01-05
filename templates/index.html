@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片选择</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            text-align: center;
+            padding: 50px;
+        }
+        select {
+            width: 300px;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            width: 315px;
+            height: 50px;
+            margin-top: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        #imageContainer {
+            margin-top: 30px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <form action="submit" method="post">
+        <label for="imageSelector">选择图片：</label>
+        <select id="imageSelector" name="imageSelector">
+            {% for image in images %}
+                <option value="{{ image }}">{{ image }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="显示图片">
+    </form>
+    <div id="imageContainer"></div>
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var selectedImage = document.querySelector('#imageSelector').value;
+            var imageContainer = document.getElementById('imageContainer');
+
+            // 清除之前显示的图片
+            imageContainer.innerHTML = '';
+
+            // 创建一个新的<img>元素，并设置其src属性为所选图片的路径
+            var newImage = document.createElement('img');
+            newImage.src = '/static/images/' + selectedImage;
+
+            // 将新图片添加到imageContainer中
+            imageContainer.appendChild(newImage);
+        });
+    </script>
+</body>
+</html>
